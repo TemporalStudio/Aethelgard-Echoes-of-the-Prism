@@ -1,39 +1,41 @@
-Daftar ID Elemen (Prism Spectrum)
-ID Elemen	Nama Elemen	Karakteristik Tempur Utama	Efek Status Khas
-PYR	Pyra (Api)	Burst damage tinggi, penetrasi pertahanan fisik.	Burn (Pengurangan HP berkala)
-HYD	Hydro (Air)	Adaptif, manipulasi action order, pemulihan energi.	Wet (Meningkatkan efek elemen listrik/es)
-TER	Terra (Tanah)	Pertahanan fisik maksimal, stabilitas posisi.	Stagger (Menurunkan guard musuh)
-AER	Aero (Udara)	Kecepatan tinggi (speed), mobilitas, evasion.	Windblown (Menggeser urutan giliran)
-ICE	Cryo (Es)	Kontrol area (crowd control), penundaan giliran musuh.	Freeze (Melewatkan 1 giliran)
-PLN	Flora (Tanaman)	Regenerasi berkelanjutan, drain HP, manipulasi status.	Rooted (Mencegah perpindahan posisi/tarik mundur)
-ELE	Volti (Petir)	Kecepatan serangan kilat, peluang critical tinggi.	Shock (Peluang gagal bertindak)
-LUM	Lumen (Cahaya)	Efektif melawan anomali, buff statistik tim.	Blind (Mengurangi akurasi serangan musuh)
-UMB	Umbra (Kegelapan)	Serangan tipe debuff, penetrasi mental/jiwa.	Cursed (Mengurangi efektivitas pemulihan)
-Mekanika Spesies dengan Dua Elemen (Dual-Element)
-Spesies Aetherkin yang memiliki dua elemen (seperti Pyrokite dengan kombinasi PYR/AER) mengadopsi sistem kekuatan berlapis yang memperluas opsi taktis dalam pertempuran turn-based.
+## Daftar ID Elemen (Prism Spectrum)
 
+| ID Elemen | Nama Elemen | Karakteristik Tempur Utama | Efek Status Khas |
+| --- | --- | --- | --- |
+| **PYR** | Pyra (Api) | *Burst damage* tinggi, penetrasi pertahanan fisik. | *Burn* (Pengurangan HP berkala) |
+| **HYD** | Hydro (Air) | Adaptif, manipulasi *action order*, pemulihan energi. | *Wet* (Meningkatkan efek elemen listrik/es) |
+| **TER** | Terra (Tanah) | Pertahanan fisik maksimal, stabilitas posisi. | *Stagger* (Menurunkan *guard* musuh) |
+| **AER** | Aero (Udara) | Kecepatan tinggi (*speed*), mobilitas, *evasion*. | *Windblown* (Menggeser urutan giliran) |
+| **ICE** | Cryo (Es) | Kontrol area (*crowd control*), penundaan giliran musuh. | *Freeze* (Melewatkan 1 giliran) |
+| **PLN** | Flora (Tanaman) | Regenerasi berkelanjutan, *drain* HP, manipulasi status. | *Rooted* (Mencegah perpindahan posisi/tarik mundur) |
+| **ELE** | Volti (Petir) | Kecepatan serangan kilat, peluang *critical* tinggi. | *Shock* (Peluang gagal bertindak) |
+| **LUM** | Lumen (Cahaya) | Efektif melawan anomali, *buff* statistik tim. | *Blind* (Mengurangi akurasi serangan musuh) |
+| **UMB** | Umbra (Kegelapan) | Serangan tipe *debuff*, penetrasi mental/jiwa. | *Cursed* (Mengurangi efektivitas pemulihan) |
 
-1. Sistem Klasifikasi Elemen Ganda
-Setiap Aetherkin dual-elemen memiliki Elemen Utama (Primary) dan Elemen Sekunder (Secondary).
+---
 
+## Mekanika Spesies dengan Dua Elemen (Dual-Element)
 
-•	Elemen Utama menentukan tipe pertahanan dasar, resistensi bawaan, dan pertumbuhan statistik dominan saat naik level.
+Spesies Aetherkin yang memiliki dua elemen (seperti *Pyrokite* dengan kombinasi `PYR`/`AER`) mengadopsi sistem kekuatan berlapis yang memperluas opsi taktis dalam pertempuran *turn-based*.
 
-•	Elemen Sekunder memberikan akses ke variasi skill pool tambahan dan memperluas cakupan sinergi tim.
+### 1. Sistem Klasifikasi Elemen Ganda
 
-2. Keuntungan Dual-STAB (Same-Type Attack Bonus)
-Aetherkin mendapatkan bonus damage saat menggunakan skill yang selaras dengan elemen mereka. Pada spesies dual-elemen, bonus ini berlaku untuk kedua jalur elemen (PYR dan AER), membuat mereka memiliki daya gedor ofensif yang lebih fleksibel dibandingkan spesies elemen tunggal di situasi pertempuran tertentu.
+Setiap Aetherkin dual-elemen memiliki **Elemen Utama (Primary)** dan **Elemen Sekunder (Secondary)**.
 
+* Elemen Utama menentukan tipe pertahanan dasar, resistensi bawaan, dan pertumbuhan statistik dominan saat naik level.
+* Elemen Sekunder memberikan akses ke variasi *skill pool* tambahan dan memperluas cakupan sinergi tim.
 
-3. Logika Kalkulasi Kelemahan dan Ketahanan (Weakness & Resistance)
-Kalkulasi kelemahan (weakness) dan ketahanan (resistance) digabungkan secara multiplikatif berdasarkan matriks elemen:
+### 2. Keuntungan *Dual-STAB* (Same-Type Attack Bonus)
 
+Aetherkin mendapatkan bonus *damage* saat menggunakan skill yang selaras dengan elemen mereka. Pada spesies dual-elemen, bonus ini berlaku untuk kedua jalur elemen (`PYR` dan `AER`), membuat mereka memiliki daya gedor ofensif yang lebih fleksibel dibandingkan spesies elemen tunggal di situasi pertempuran tertentu.
 
-•	Netralisasi Silang: Jika Elemen A lemah terhadap X, tetapi Elemen B tahan terhadap X, maka kelemahan tersebut saling menetralkan (menjadi damage normal 1x).
+### 3. Logika Kalkulasi Kelemahan dan Ketahanan (Weakness & Resistance)
 
-•	Akumulasi Kerentanan: Jika kedua elemen sama-sama lemah terhadap satu elemen musuh (contoh: elemen ganda yang rentan terhadap ICE), maka Aetherkin tersebut akan menerima damage berlipat ganda (kalkulasi kritis 2x atau 4x lipat). Sebaliknya, ketahanan ganda terhadap elemen tertentu akan membuat mereka hampir kebal terhadap tipe serangan tersebut.
+Kalkulasi kelemahan (*weakness*) dan ketahanan (*resistance*) digabungkan secara multiplikatif berdasarkan matriks elemen:
 
-4. Adaptasi Lingkungan & Resonansi Emosional
-Spesies dual-elemen memiliki tingkat fleksibilitas tinggi dalam sistem Resonansi Emosional. Bergantung pada wilayah tempat pertarungan berlangsung (misalnya area vulkanik bagi PYR/AER), salah satu elemen dapat mengalami amplifikasi kekuatan sementara jika ikatan emosional antara Seeker dan Aetherkin mencapai ambang batas maksimal (Prism Resonance).
+* **Netralisasi Silang:** Jika Elemen A lemah terhadap X, tetapi Elemen B tahan terhadap X, maka kelemahan tersebut saling menetralkan (menjadi *damage* normal 1x).
+* **Akumulasi Kerentanan:** Jika kedua elemen sama-sama lemah terhadap satu elemen musuh (contoh: elemen ganda yang rentan terhadap `ICE`), maka Aetherkin tersebut akan menerima *damage* berlipat ganda (kalkulasi kritis 2x atau 4x lipat). Sebaliknya, ketahanan ganda terhadap elemen tertentu akan membuat mereka hampir kebal terhadap tipe serangan tersebut.
 
+### 4. Adaptasi Lingkungan & Resonansi Emosional
 
+Spesies dual-elemen memiliki tingkat fleksibilitas tinggi dalam sistem **Resonansi Emosional**. Bergantung pada wilayah tempat pertarungan berlangsung (misalnya area vulkanik bagi `PYR`/`AER`), salah satu elemen dapat mengalami amplifikasi kekuatan sementara jika ikatan emosional antara Seeker dan Aetherkin mencapai ambang batas maksimal (*Prism Resonance*).
