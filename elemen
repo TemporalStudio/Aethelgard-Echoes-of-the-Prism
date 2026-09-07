@@ -1,0 +1,30 @@
+Daftar ID elemen untuk game **Aethelgard: Echoes of the Prism** dirancang menggunakan sistem tipe dasar yang setara dengan sistem *Pokémon*, lengkap dengan kode unik, kelemahan, dan keunggulan taktis agar seimbang (*balance*).
+
+Berikut adalah daftar lengkap 9 Elemen Utama beserta ID, deskripsi singkat, dan relasi kekuatannya:
+
+---
+
+### Daftar ID & Tabel Elemen Aethelgard
+
+| ID | Nama Elemen | Deskripsi & Contoh Aetherkin | Efektif Melawan (Super Effective) | Lemah Terhadap (Weak Against) |
+| --- | --- | --- | --- | --- |
+| **ETH-01** | **Pyre (Api)** | Energi panas membakar dan ledakan plasma. *(Cth: Pyrokite)* | Flora, Cryo, Metal | Tidal, Terra, Plasma |
+| **ETH-02** | **Tidal (Air)** | Arus deras, tekanan hidrolik, dan kendali cairan. *(Cth: Tidalisk)* | Pyre, Terra, Magma | Volt, Flora, Cosmic |
+| **ETH-03** | **Terra (Tanah)** | Kekuatan tektonik, bebatuan, dan ketahanan fisik. *(Cth: Terrasprout)* | Volt, Pyre, Metal | Tidal, Flora, Wind |
+| **ETH-04** | **Wind (Udara)** | Kecepatan kilat, badai, dan manipulasi tekanan udara. | Flora, Umbra, Spirit | Cryo, Volt, Terra |
+| **ETH-05** | **Volt (Petrik/Listrik)** | Konduksi energi, elektromagnetisme, dan sengatan cepat. | Tidal, Wind, Cosmic | Terra, Magma, Spirit |
+| **ETH-06** | **Flora (Tanaman)** | Regenerasi alam, racun organik, dan jeratan akar. | Tidal, Terra, Cosmic | Pyre, Wind, Magma |
+| **ETH-07** | **Cryo (Es)** | Suhu sub-zero, pembekuan, dan kristalisasi. | Wind, Terra, Dragon | Pyre, Metal, Cosmic |
+| **ETH-08** | **Umbra (Kegelapan)** | Bayangan, ilusi, dan serapan energi negatif. | Spirit, Cosmic, Wind | Prism, Pyre, Volt |
+| **ETH-09** | **Prism (Cahaya/Murni)** | Energi spektral murni dari *Prism Core*. | Umbra, Dragon, Semua Elemen (Netral) | Prism, Spirit |
+
+---
+
+### Elemen Hibrid & Khusus (Advanced/Sub-ID)
+
+Selain 9 elemen dasar di atas, terdapat variasi elemen ganda (Dual-Type) yang diadopsi dari *starter* dan Aetherkin tingkat lanjut:
+
+* **HYB-01 (Pyrokite):** *Pyre / Wind* (Api & Udara) — Fokus pada serangan *Critical* berbasis kecepatan dan luka bakar menyebar.
+* **HYB-02 (Tidalisk):** *Tidal / Cryo* (Air & Es) — Fokus pada kontrol area dan efek *freeze* (beku).
+* **HYB-03 (Terrasprout):** *Terra / Flora* (Tanah & Tanaman) — Fokus pada pertahanan tinggi (*Tank*) dan pemulihan HP mandiri.
+* **LEG-09 (Prism Core):** *Prism / Cosmic* — Elemen eksklusif yang hanya dimiliki oleh Aetherkin Purba/Legendaris.
