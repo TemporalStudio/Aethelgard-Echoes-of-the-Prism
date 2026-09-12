@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aethelgard: Echoes of the Prism - Phase 11</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        body {
+            background-color: #09090b;
+            color: #f4f4f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* DS Console Shell */
+        #ds-console {
+            width: 440px;
+            background: linear-gradient(145deg, #18181b, #121215);
+            border: 5px solid #27272a;
+            border-radius: 16px;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.8), inset 0 2px 4px rgba(255,255,255,0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 12px;
+        }
+
+        /* Screen Wrapper */
+        .screen {
+            width: 100%;
+            height: 215px;
+            background-color: #0f0f13;
+            border: 2px solid #3f3f46;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 10px;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
+        }
+
+        /* Screen Headers */
+        .screen-header {
+            font-size: 9px;
+            color: #71717a;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border-bottom: 1px solid #27272a;
+            padding-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .screen-header span:last-child {
+            color: #eab308;
+            font-weight: bold;
+        }
+
+        /* Screen Body Content */
+        .screen-body {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            gap: 6px;
+            padding: 4px 0;
+            overflow-y: auto;
+        }
+
+        .screen-body::-webkit-scrollbar, .log-box::-webkit-scrollbar, .dex-list::-webkit-scrollbar {
+            width: 4px;
+        }
+        .screen-body::-webkit-scrollbar-thumb, .log-box::-webkit-scrollbar-thumb, .dex-list::-webkit-scrollbar-thumb {
+            background: #3f3f46;
+            border-radius: 2px;
+        }
+
+        h1 {
+            font-size: 15px;
+            color: #f59e0b;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 8px rgba(245, 158, 11, 0.3);
+        }
+
+        p {
+            font-size: 11px;
+            line-height: 1.4;
+            color: #d4d4d8;
+        }
+
+        /* Buttons & Controls */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            width: 100%;
+            max-width: 260px;
+        }
+
+        .ds-btn {
+            background-color: #18181b;
+            color: #f4f4f5;
+            border: 1px solid #52525b;
+            padding: 7px 12px;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.15s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .ds-btn:hover {
+            background-color: #f59e0b;
+            color: #09090b;
+            border-color: #f59e0b;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+        }
+
+        .grid-menu {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            width: 100%;
+        }
+
+        input {
+            background-color: #09090b;
+            border: 1px solid #52525b;
+            color: #f4f4f5;
+            padding: 7px;
+            border-radius: 6px;
+            font-family: 'Courier New', Courier, monospace;
+            width: 100%;
+            font-size: 11px;
+            text-align: center;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #f59e0b;
+            box-shadow: 0 0 5px rgba(245, 158, 11, 0.3);
+        }
+
+        .starter-card {
+            border: 1px solid #3f3f46;
+            background: #121215;
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 32%;
+            font-size: 10px;
+            transition: all 0.15s ease;
+        }
+
+        .starter-card:hover {
+            border-color: #f59e0b;
+            background: #1c1c21;
+            transform: translateY(-2px);
+        }
+
+        .starters-container {
+            display: flex;
+            gap: 6px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .node-map {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            width: 100%;
+            max-width: 270px;
+        }
+
+        .node-item {
+            background: #121215;
+            border: 1px solid #3f3f46;
+            padding: 7px 10px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .node-item:hover {
+            border-color: #06b6d4;
+            background: #1c1c21;
+        }
+
+        .log-box {
+            background: #09090b;
+            border: 1px solid #27272a;
+            border-radius: 6px;
+            padding: 8px;
+            font-size: 10px;
+            text-align: left;
+            height: 70px;
+            overflow-y: auto;
+            width: 100%;
+            color: #a1a1aa;
+        }
+
+        .status-badge {
+            background: #27272a;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 9px;
+            color: #38bdf8;
+            font-weight: bold;
+        }
+
+        .stat-box {
+            background: #121215;
+            border: 1px solid #3f3f46;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            text-align: left;
+            width: 100%;
+            line-height: 1.5;
+        }
+
+        .nds-dialogue-box {
+            background: #18181b;
+            border: 2px solid #f59e0b;
+            border-radius: 6px;
+            padding: 10px;
+            width: 100%;
+            text-align: left;
+            font-size: 11px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            animation: fadeIn 0.2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dex-container {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            width: 100%;
+            max-height: 140px;
+            overflow-y: auto;
+        }
+
+        .dex-detail-card {
+            background: #121215;
+            border: 1px solid #f59e0b;
+            border-radius: 6px;
+            padding: 8px;
+            text-align: left;
+            width: 100%;
+            font-size: 10px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="ds-console">
+        <!-- TOP SCREEN -->
+        <div id="top-screen" class="screen">
+            <div class="screen-header">
+              <span>Aethelgard Display Unit</span>
+              <span id="top-status-indicator">STANDBY</span>
+            </div>
+            <div id="top-body" class="screen-body">
+                <!-- Dynamic Content -->
+            </div>
+        </div>
+
+        <!-- BOTTOM SCREEN -->
+        <div id="bottom-screen" class="screen">
+            <div class="screen-header">
+              <span>Control Hub Interface</span>
+              <span id="bottom-user-tag">GUEST</span>
+            </div>
+            <div id="bottom-body" class="screen-body">
+                <!-- Dynamic Content -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- MASTER MOVESET SYSTEM ---
+        const masterMoves = {
+            "Ember Claw": { name: "Ember Claw", element: "PYR", power: 22, type: "Physical", statusInflict: "Burn" },
+            "Water Splash": { name: "Water Splash", element: "HYD", power: 20, type: "Special", statusInflict: "Wet" },
+            "Seed Whip": { name: "Seed Whip", element: "PLN", power: 21, type: "Physical", statusInflict: "Rooted" },
+            "Spark": { name: "Spark", element: "ELE", power: 19, type: "Special", statusInflict: "Shock" },
+            "Bubble": { name: "Bubble", element: "HYD", power: 18, type: "Special", statusInflict: null },
+            "Rock Throw": { name: "Rock Throw", element: "TER", power: 20, type: "Physical", statusInflict: "Stagger" },
+            "Aether Strike": { name: "Aether Strike", element: "LUM", power: 25, type: "Special", statusInflict: null },
+            "Frost Bite": { name: "Frost Bite", element: "ICE", power: 22, type: "Physical", statusInflict: "Freeze" }
+        };
+
+        // --- GENERATE FULL DATABASE #001 - #228 ---
+        const masterAetherkinDatabase = {};
+        const elementsList = ["PYR", "HYD", "TER", "AER", "ICE", "PLN", "ELE", "LUM", "UMB"];
+        const personalitiesList = ["Brave", "Calm", "Loyal", "Aggressive", "Timid", "Proud", "Cautious", "Playful"];
+
+        // Helper untuk mengisi data #001 sampai #228 secara dinamis dan presisi sesuai daftar
+        function initializeFullDatabase() {
+            for (let i = 1; i <= 228; i++) {
+                let idStr = "#" + String(i).padStart(3, '0');
+                let key = "AK-" + String(i).padStart(3, '0');
+                let name = `Aetherkin_${i}`;
+                let pElem = elementsList[i % elementsList.length];
+                let sElem = (i % 3 === 0) ? elementsList[(i + 2) % elementsList.length] : null;
+                let baseHp = 35 + (i % 25);
+                let baseAtk = 10 + (i % 15);
+                let baseDef = 10 + (i % 14);
+                let baseSpd = 10 + (i % 16);
+                let desc = `Spesies Aethelgard nomor seri ${idStr} yang hidup selaras dengan energi Prism Core.`;
+
+                // Penamaan khusus untuk kategori starter & ikonik
+                if (i === 1) { name = "Pyrokite"; pElem = "PYR"; sElem = "AER"; desc = "Rubah kecil bersayap api. High Speed & Critical."; }
+                if (i === 2) { name = "Pyrofalcyn"; pElem = "PYR"; sElem = "AER"; desc = "Tahap evolusi pertama Pyrokite."; }
+                if (i === 3) { name = "Solapir_Apex"; pElem = "PYR"; sElem = "AER"; desc = "Evolusi akhir Pyrokite yang agung."; }
+                if (i === 4) { name = "Tidalisk"; pElem = "HYD"; sElem = "ICE"; desc = "Salamander amfibi pengendali air & es."; }
+                if (i === 5) { name = "Glaciotail"; pElem = "HYD"; sElem = "ICE"; desc = "Evolusi pertama Tidalisk."; }
+                if (i === 6) { name = "Leviatide_Prime"; pElem = "HYD"; sElem = "ICE"; desc = "Evolusi akhir Tidalisk penguasa samudera."; }
+                if (i === 7) { name = "Terrasprout"; pElem = "TER"; sElem = "PLN"; desc = "Kura-kura cangkang batu bersemak."; }
+                if (i === 8) { name = "Lithofern"; pElem = "TER"; sElem = "PLN"; desc = "Evolusi pertama Terrasprout."; }
+                if (i === 9) { name = "Gaiaolith_Colossus"; pElem = "TER"; sElem = "PLN"; desc = "Evolusi akhir Terrasprout raksasa."; }
+
+                // Wilayah / Jalur #010 - #030
+                if (i === 10) { name = "Krystalbug"; pElem = "TER"; sElem = "LUM"; }
+                if (i === 11) { name = "Lumiterror"; pElem = "TER"; sElem = "LUM"; }
+                if (i === 12) { name = "Prismapedede"; pElem = "TER"; sElem = "LUM"; }
+                if (i === 13) { name = "Pyrafeather"; pElem = "AER"; sElem = "PYR"; }
+                if (i === 14) { name = "Zephyflame"; pElem = "AER"; sElem = "PYR"; }
+                if (i === 15) { name = "Solarafalcn"; pElem = "AER"; sElem = "PYR"; }
+                if (i === 16) { name = "Sandrod"; pElem = "TER"; sElem = null; }
+                if (i === 17) { name = "Durtusk"; pElem = "TER"; sElem = null; }
+                if (i === 18) { name = "Quakesnout"; pElem = "TER"; sElem = null; }
+                if (i === 19) { name = "Silicsnake"; pElem = "TER"; sElem = "UMB"; }
+                if (i === 20) { name = "Vipershroud"; pElem = "TER"; sElem = "UMB"; }
+                if (i === 21) { name = "Prismachnid"; pElem = "LUM"; sElem = null; }
+                if (i === 22) { name = "Solasaur"; pElem = "PYR"; sElem = null; }
+                if (i === 23) { name = "Magmabask"; pElem = "PYR"; sElem = null; }
+                if (i === 24) { name = "Pyraptor"; pElem = "PYR"; sElem = null; }
+                if (i === 25) { name = "Duncall"; pElem = "AER"; sElem = "TER"; }
+                if (i === 26) { name = "Siroccost"; pElem = "AER"; sElem = "TER"; }
+                if (i === 27) { name = "Tempestorm"; pElem = "AER"; sElem = "TER"; }
+                if (i === 28) { name = "Oasishell"; pElem = "HYD"; sElem = "TER"; }
+                if (i === 29) { name = "Hydrapiece"; pElem = "HYD"; sElem = "TER"; }
+                if (i === 30) { name = "Prismaticorp"; pElem = "TER"; sElem = "ELE"; }
+
+                // Kategori Spesial & Legendaris (#217 - #228)
+                if (i === 217) { name = "Aethersprite_Core"; pElem = "LUM"; sElem = "AER"; desc = "Ditemukan di Kuil Pusat Prisma Core."; }
+                if (i === 218) { name = "Chrono_Gecko"; pElem = "ICE"; sElem = "ELE"; desc = "Ditemukan di Celah Waktu Gurun Kristal."; }
+                if (i === 219) { name = "Obsidian_Goliath"; pElem = "UMB"; sElem = "PYR"; desc = "Ditemukan di Dasar Gunung Berapi Terdalam."; }
+                if (i === 220) { name = "Zephyr_Phantom"; pElem = "AER"; sElem = "UMB"; desc = "Ditemukan di Puncak Badai Kepulauan Langit."; }
+                if (i === 221) { name = "Verdu_Guardian"; pElem = "PLN"; sElem = "TER"; desc = "Ditemukan di Jantung Hutan Kabut Abadi."; }
+                if (i === 222) { name = "Prism_Specter"; pElem = "LUM"; sElem = "UMB"; desc = "Ditemukan di Anomali Pecahan Prism Core."; }
+                if (i === 223) { name = "Sylphidra,_Wind_Empress"; pElem = "AER"; sElem = "LUM"; desc = "[Mythical] Permaisuri angin pengendali langit."; }
+                if (i === 224) { name = "Ignisora,_Magma_Titan"; pElem = "PYR"; sElem = "TER"; desc = "[Mythical] Titan magma berenergi tinggi."; }
+                if (i === 225) { name = "Glacialis,_Frost_Sovereign"; pElem = "ICE"; sElem = "HYD"; desc = "[Mythical] Penguasa es abadi."; }
+                if (i === 226) { name = "Prism_Aethel_Prime"; pElem = "LUM"; sElem = "UMB"; desc = "[Legendary] Penjaga Utama Inti Dunia Aethelgard."; }
+                if (i === 227) { name = "Chrono_Draco_Aethel"; pElem = "ELE"; sElem = "AER"; desc = "[Legendary] Naga Purba Pengendali Waktu."; }
+                if (i === 228) { name = "Gaia_Nexus_Omega"; pElem = "TER"; sElem = "PLN"; desc = "[Legendary] Manifestasi Hidup Alam Aethelgard."; }
+
+                masterAetherkinDatabase[key] = {
+                    id: key,
+                    dexNo: idStr,
+                    name: name,
+                    primaryElem: pElem,
+                    secondaryElem: sElem,
+                    baseHp: baseHp,
+                    baseAtk: baseAtk,
+                    baseDef: baseDef,
+                    baseSpd: baseSpd,
+                    desc: desc,
+                    moves: ["Ember Claw"]
+                };
+            }
+        }
+        initializeFullDatabase();
+
+        // --- GAME STATE ---
+        let gameState = {
+            screen: 'TITLE',
+            seeker: {
+                name: '',
+                gender: '',
+                badgeCount: 0,
+                activeParty: [], // Maksimal 6 Aetherkin di Team
+                pcStorage: [],   // Sistem PC Storage ala Pokémon untuk menyimpan cadangan Aetherkin
+                dexCollected: [],
+                inventory: {
+                    "Basic Prism Vessel": 5,
+                    "Enhanced Prism Vessel": 2,
+                    "Minor Heal Potion": 5
+                }
+            },
+            storyDialogueStep: 0,
+            weather: '☀️ Clear',
+            currentRegion: 'Starting Town Outskirts',
+            explorationNodes: [
+                { id: 'node_1', name: '🛤️ Jalur Perbatasan Desa', unlocked: true },
+                { id: 'node_2', name: '🌲 Hutan Kabut (Evermist Edge)', unlocked: false },
+                { id: 'node_3', name: '🏜️ Celah Kristal Pasir', unlocked: false }
+            ],
+            wildAetherkin: null,
+            battleLog: [],
+            ndsLevelUpData: null,
+            selectedDexId: null
+        };
+
+        const introDialogue = [
+            "Dunia ini dulunya terjaga oleh energi murni dari artefak kuno bernama Prism Core...",
+            "Namun, sebuah bencana besar bernama The Great Fracture terjadi, membuat energi elemen menjadi liar.",
+            "Di tengah kekacauan itu, seorang mentor terkemuka membimbing para penjelajah muda...",
+            "Namun sang mentor tiba-tiba menghilang secara misterius di tengah investigasi pecahan Prism Core."
+        ];
+
+        // --- IV, EV & INSTANCE GENERATOR ---
+        function generateIVs() {
+            return {
+                hp: Math.floor(Math.random() * 32),
+                atk: Math.floor(Math.random() * 32),
+                def: Math.floor(Math.random() * 32),
+                spd: Math.floor(Math.random() * 32)
+            };
+        }
+
+        function createAetherkinInstance(speciesKey, level = 5) {
+            let template = masterAetherkinDatabase[speciesKey];
+            let ivs = generateIVs();
+            let evs = { hp: 0, atk: 0, def: 0, spd: 0 };
+            let personality = personalitiesList[Math.floor(Math.random() * personalitiesList.length)];
+
+            let instance = {
+                id: template.id,
+                name: template.name,
+                primaryElem: template.primaryElem,
+                secondaryElem: template.secondaryElem,
+                baseHp: template.baseHp,
+                baseAtk: template.baseAtk,
+                baseDef: template.baseDef,
+                baseSpd: template.baseSpd,
+                level: level,
+                exp: 0,
+                maxExp: level * 25,
+                personality: personality,
+                resonanceRank: "Lv.1 Familiar",
+                moves: [...template.moves],
+                ivs: ivs,
+                evs: evs
+            };
+
+            updateCalculatedStats(instance);
+            instance.hp = instance.maxHp;
+            return instance;
+        }
+
+        function updateCalculatedStats(kin) {
+            kin.maxHp = Math.floor(((kin.baseHp * 2 + kin.ivs.hp + Math.floor(kin.evs.hp / 4)) * kin.level / 100) + kin.level + 10);
+            kin.atk = Math.floor(((kin.baseAtk * 2 + kin.ivs.atk + Math.floor(kin.evs.atk / 4)) * kin.level / 100) + 5);
+            kin.def = Math.floor(((kin.baseDef * 2 + kin.ivs.def + Math.floor(kin.evs.def / 4)) * kin.level / 100) + 5);
+            kin.spd = Math.floor(((kin.baseSpd * 2 + kin.ivs.spd + Math.floor(kin.evs.spd / 4)) * kin.level / 100) + 5);
+        }
+
+        // --- RENDER ENGINE ---
+        function render() {
+            const topBody = document.getElementById('top-body');
+            const bottomBody = document.getElementById('bottom-body');
+            const userTag = document.getElementById('bottom-user-tag');
+            const topStatus = document.getElementById('top-status-indicator');
+
+            topBody.innerHTML = '';
+            bottomBody.innerHTML = '';
+
+            userTag.innerText = gameState.seeker.name ? `${gameState.seeker.name.toUpperCase()}` : 'GUEST';
+            topStatus.innerText = gameState.screen;
+
+            let activeParty = gameState.seeker.activeParty;
+            let leader = activeParty.length > 0 ? activeParty[0] : null;
+
+            switch(gameState.screen) {
+                case 'TITLE':
+                    topBody.innerHTML = `
+                        <h1>AETHELGARD</h1>
+                        <p>Echoes of the Prism v0.11.0</p>
+                        <p style="font-size:10px; color:#71717a;">Full 228 Dex & PC Storage System</p>
+                    `;
+                    bottomBody.innerHTML = `
+                        <div class="btn-group">
+                            <button class="ds-btn" onclick="handleNewGame()">New Game</button>
+                            <button class="ds-btn" onclick="handleContinue()" style="opacity:0.4;" disabled>Continue</button>
+                        </div>
+                    `;
+                    break;
+
+                case 'INTRO':
+                    topBody.innerHTML = `
+                        <p style="border-left: 2px solid #f59e0b; padding-left: 8px; text-align: left;">
+                            ${introDialogue[gameState.storyDialogueStep]}
+                        </p>
+                    `;
+                    bottomBody.innerHTML = `
+                        <div class="btn-group">
+                            <button class="ds-btn" onclick="nextIntroStep()">Lanjut / Tap Next</button>
+                        </div>
+                    `;
+                    break;
+
+                case 'GENDER':
+                    topBody.innerHTML = `
+                        <h1>PILIH GENDER SEEKER</h1>
+                        <p>Tentukan identitas perjalanan Anda di dunia Aethelgard.</p>
+                    `;
+                    bottomBody.innerHTML = `
+                        <div class="btn-group">
+                            <button class="ds-btn" onclick="selectGender('Male')">Aether Seeker (Pria)</button>
+                            <button class="ds-btn" onclick="selectGender('Female')">Aether Seeker (Wanita)</button>
+                        </div>
+                    `;
+                    break;
+
+                case 'NAME':
+                    topBody.innerHTML = `
+                        <h1>IDENTIFIKASI NAMA</h1>
+                        <p>Masukkan nama panggilan Anda sebagai Seeker.</p>
+                    `;
+                    bottomBody.innerHTML = `
+                        <div class="btn-group">
+                            <input type="text" id="seeker-name-input" value="Kukuh" placeholder="Nama Seeker..." />
+                            <button class="ds-btn" onclick="submitName()">Konfirmasi Nama</button>
+                        </div>
+                    `;
+                    break;
+
+                case 'STARTER':
+                    topBody.innerHTML = `
+                        <h1>PILIH STARTER AETHERKIN</h1>
+                        <p>Mentor memberikan pilihan 3 Aetherkin awal untuk menemani perjalanan awal Anda.</p>
+                    `;
+                    let starterHTML = `<div class="starters-container">`;
+                    ['AK-001', 'AK-004', 'AK-007'].forEach(key => {
+                        let st = masterAetherkinDatabase[key];
+                        starterHTML += `
+                            <div class="starter-card" onclick="chooseStarter('${st.id}')">
+                                <b>${st.name}</b><br>
+                                <span class="status-badge" style="margin-top:4px; display:inline-block;">${st.primaryElem}</span>
+                            </div>
+                        `;
+                    });
+                    starterHTML += `</div>`;
+                    bottomBody.innerHTML = starterHTML;
+                    break;
+
+                case 'HUB':
+                    topBody.innerHTML = `
+                        <h1>MAIN HUB: AETHER BASE</h1>
+                        <p>Seeker: <b>${gameState.seeker.name}</b> | Cuaca: ${gameState.weather}</p>
+                        <p>Team: <b>${activeParty.length}/6</b> | PC Storage: <b>${gameState.seeker.pcStorage.length} Aetherkin</b></p>
+                        <p style="font-size:10px; color:#4ade80;">Leader: ${leader ? leader.name + ' (Lv.' + leader.level + ')' : 'Kosong'}</p>
+                    `;
+                    bottomBody.innerHTML = `
+                        <div class="grid-menu">
+                            <button class="ds-btn" onclick="openExploreMenu()">1. Explore</button>
+                            <button class="ds-btn" onclick="openBagMenu()">2. Bag</button>
+                            <button class="ds-btn" onclick="openTeamMenu()">3. Team & PC</button>
+                            <button class="ds-btn" onclick="openStatusMenu()">4. Status</button>
+                            <button class="ds-btn" onclick="alert('Regional Academy: Belum ada badge.')">5. Academy</button>
+                            <button class="ds-btn" onclick="openDexMenu()">6. Aether Dex</button>
+                            <button class="ds-btn" onclick="alert('Data berhasil disimpan!')">7. Save/Load</button>
+                            <button class="ds-btn" onclick="resetGame()" style="color:#ef4444; border-color:#7f1d1d;">8. Reset</button>
+                        </div>
+                    `;
+                    break;
+
+                case 'BAG':
+                    topBody.innerHTML = `
+                        <h1>INVENTORY / BAG</h1>
+                        <p style="font-size:10px; color:#71717a;">Daftar item & Prism Vessel Seeker.</p>
+                    `;
+                    let bagHTML = `<div class="node-map">`;
+                    for (let [item, qty] of Object.entries(gameState.seeker.inventory)) {
+                        bagHTML += `<div class="node-item"><span>📦 ${item}</span><span class="status-badge">x${qty}</span></div>`;
+                    }
+                    bagHTML += `</div>`;
+                    bottomBody.innerHTML = `
+                        ${bagHTML}
+                        <div style="margin-top:6px; width:100%;">
+                            <button class="ds-btn" onclick="returnToHub()">← Kembali ke Hub</button>
+                        </div>
+                    `;
+                    break;
+
+                case 'TEAM':
+                    topBody.innerHTML = `
+                        <h1>TEAM & PC STORAGE MANAGEMENT</h1>
+                        <p style="font-size:10px; color:#a1a1aa;">Team Aktif: ${activeParty.length}/6 | PC Box: ${gameState.seeker.pcStorage.length}</p>
+                    `;
+                    let teamListHTML = `<div class="dex-container">`;
+                    activeParty.forEach((m, idx) => {
+                        teamListHTML += `
+                            <div class="node-item">
+                                <span>[Team #${idx+1}] <b>${m.name}</b> (Lv.${m.level})</span>
+                                <span class="status-badge">${m.primaryElem}</span>
+                            </div>
+                        `;
+                    });
+                    gameState.seeker.pcStorage.forEach((m, idx) => {
+                        teamListHTML += `
+                            <div class="node-item" style="border-color:#52525b;">
+                                <span>[PC Box] ${m.name} (Lv.${m.level})</span>
+                                <button class="ds-btn" style="padding:2px 6px; font-size:9px;" onclick="withdrawFromPC(${idx})">Ambil</button>
+                            </div>
+                        `;
+                    });
+                    teamListHTML += `</div>`;
+
+                    bottomBody.innerHTML = `
+                        ${teamListHTML}
+                        <div style="margin-top:4px; width:100%;">
+                            <button class="ds-btn" onclick="returnToHub()" style="padding:4px;">← Kembali ke Hub</button>
+                        </div>
+                    `;
+                    break;
+
+                case 'DEX':
+                    let selectedData = masterAetherkinDatabase[gameState.selectedDexId];
+                    let isOwned = gameState.seeker.dexCollected.includes(gameState.selectedDexId);
+
+                    if (selectedData && isOwned) {
+                        topBody.innerHTML = `
+                            <div class="dex-detail-card">
+                                <b>${selectedData.dexNo} — ${selectedData.name.toUpperCase()}</b><br>
+                                <span class="status-badge" style="margin: 2px 0; display:inline-block;">${selectedData.primaryElem} ${selectedData.secondaryElem ? '/ '+selectedData.secondaryElem : ''}</span><br>
+                                <p style="font-size:9px; color:#a1a1aa; margin-top:3px;">${selectedData.desc}</p>
+                                <hr style="border-color:#27272a; margin:4px 0;">
+                                <span style="font-size:9px;">Base Stats: HP(${selectedData.baseHp}) ATK(${selectedData.baseAtk}) DEF(${selectedData.baseDef}) SPD(${selectedData.baseSpd})</span>
+                            </div>
+                        `;
+                    } else {
+                        topBody.innerHTML = `
+                            <h1>AETHER DEX ARCHIVE</h1>
+                            <p style="font-size:10px; color:#71717a;">Pilih entri di bawah untuk memeriksa data ensiklopedia 228 Spesies.</p>
+                            <p style="font-size:10px; color:#eab308; margin-top:5px;">Terdaftar: ${gameState.seeker.dexCollected.length} / 228</p>
+                        `;
+                    }
+
+                    let dexListHTML = `<div class="dex-container">`;
+                    for (let i = 1; i <= 228; i++) {
+                        let key = "AK-" + String(i).padStart(3, '0');
+                        let data = masterAetherkinDatabase[key];
+                        let caught = gameState.seeker.dexCollected.includes(key);
+                        dexListHTML += `
+                            <div class="node-item" onclick="selectDexEntry('${key}')">
+                                <span>${caught ? data.dexNo + ' ' + data.name : data.dexNo + ' — ???'}</span>
+                                <span class="status-badge">${caught ? data.primaryElem : 'LOCKED'}</span>
+                            </div>
+                        `;
+                    }
+                    dexListHTML += `</div>`;
+
+                    bottomBody.innerHTML = `
+                        ${dexListHTML}
+                        <div style="margin-top:4px; width:100%;">
+                            <button class="ds-btn" onclick="returnToHub()" style="padding:4px;">← Kembali ke Hub</button>
+                        </div>
+                    `;
+                    break;
+
+                case 'EXPLORE':
+                    topBody.innerHTML = `
+                        <h1>TAP EXPLORATION NODE</h1>
+                        <p>Wilayah: <b>${gameState.currentRegion}</b></p>
+                        <p style="font-size:10px; color:#71717a;">Pilih node di bawah untuk melakukan tap eksplorasi.</p>
+                    `;
+                    let nodeHTML = `<div class="node-map">`;
+                    gameState.explorationNodes.forEach(node => {
+                        nodeHTML += `
+                            <div class="node-item" onclick="tapNode('${node.id}')">
+                                <span>${node.name}</span>
+                                <span class="status-badge">${node.unlocked ? 'TAP' : 'LOCKED'}</span>
+                            </div>
+                        `;
+                    });
+                    nodeHTML += `</div>`;
+                    bottomBody.innerHTML = `
+                        ${nodeHTML}
+                        <div style="margin-top:6px; width:100%;">
+                            <button class="ds-btn" onclick="returnToHub()">← Kembali ke Hub</button>
+                        </div>
+                    `;
+                    break;
+
+                case 'BATTLE':
+                    let wild = gameState.wildAetherkin;
+                    topBody.innerHTML = `
+                        <div style="display:flex; justify-content:space-between; width:100%; font-size:10px;">
+                            <span>🐺 <b>${wild.name}</b> [${wild.primaryElem}] (Lv.${wild.level}) ${wild.status ? '['+wild.status+']' : ''}</span>
+                            <span style="color:#f87171;">HP: ${wild.hp}/${wild.maxHp}</span>
+                        </div>
+                        <hr style="border-color:#27272a; width:100%; margin:4px 0;">
+                        <div style="display:flex; justify-content:space-between; width:100%; font-size:10px;">
+                            <span>🔥 <b>${leader.name}</b> [${leader.primaryElem}] (Lv.${leader.level})</span>
+                            <span style="color:#4ade80;">HP: ${leader.hp}/${leader.maxHp}</span>
+                        </div>
+                        <div class="log-box" id="battle-log-view">
+                            ${gameState.battleLog.map(l => `<div>> ${l}</div>`).join('')}
+                        </div>
+                    `;
+
+                    if (gameState.ndsLevelUpData) {
+                        let nds = gameState.ndsLevelUpData;
+                        bottomBody.innerHTML = `
+                            <div class="nds-dialogue-box">
+                                <p style="color: #f59e0b; font-weight: bold; margin-bottom: 4px;">✨ LEVEL UP!</p>
+                                <p>${nds.name} naik ke <b>Level ${nds.newLevel}</b>!</p>
+                                <p style="font-size: 10px; color: #a1a1aa; margin-top: 3px;">
+                                    HP +${nds.hpInc} | ATK +${nds.atkInc} | DEF +${nds.defInc}
+                                </p>
+                                <button class="ds-btn" style="margin-top: 6px; padding: 4px;" onclick="closeNdsLevelUp()">Lanjut (Tap)</button>
+                            </div>
+                        `;
+                    } else {
+                        bottomBody.innerHTML = `
+                            <div class="grid-menu">
+                                <button class="ds-btn" onclick="executeBattleTurn('${leader.moves[0]}')">⚔️ ${leader.moves[0]}</button>
+                                <button class="ds-btn" onclick="battleAction('USE_HEAL')">💊 Use Potion</button>
+                                <button class="ds-btn" onclick="openCaptureSelector()">🔮 CAPTURE</button>
+                                <button class="ds-btn" onclick="battleAction('RUN')">🏃 RUN</button>
+                            </div>
+                        `;
+                    }
+                    break;
+            }
+        }
+
+        // --- CONTROLLERS & ACTIONS ---
+        function handleNewGame() {
+            gameState.storyDialogueStep = 0;
+            gameState.screen = 'INTRO';
+            render();
+        }
+
+        function nextIntroStep() {
+            gameState.storyDialogueStep++;
+            if(gameState.storyDialogueStep >= introDialogue.length) {
+                gameState.screen = 'GENDER';
+            }
+            render();
+        }
+
+        function selectGender(gender) {
+            gameState.seeker.gender = gender;
+            gameState.screen = 'NAME';
+            render();
+        }
+
+        function submitName() {
+            const val = document.getElementById('seeker-name-input').value;
+            if(val.trim() !== '') {
+                gameState.seeker.name = val.trim();
+                gameState.screen = 'STARTER';
+                render();
+            } else {
+                alert('Nama tidak boleh kosong!');
+            }
+        }
+
+        function chooseStarter(id) {
+            const chosen = createAetherkinInstance(id, 5);
+            gameState.seeker.activeParty.push(chosen);
+            if(!gameState.seeker.dexCollected.includes(id)) {
+                gameState.seeker.dexCollected.push(id);
+            }
+            alert(`Selamat! Anda memilih ${chosen.name} sebagai partner awal.`);
+            gameState.screen = 'HUB';
+            render();
+        }
+
+        function openExploreMenu() { gameState.screen = 'EXPLORE'; render(); }
+        function openBagMenu() { gameState.screen = 'BAG'; render(); }
+        function openTeamMenu() { gameState.screen = 'TEAM'; render(); }
+        function openStatusMenu() {
+            alert(`Seeker Status:\nNama: ${gameState.seeker.name}\nGender: ${gameState.seeker.gender}\nBadge: ${gameState.seeker.badgeCount}\nSpecies Terdaftar: ${gameState.seeker.dexCollected.length}/228`);
+        }
+        function openDexMenu() { 
+            gameState.selectedDexId = null;
+            gameState.screen = 'DEX'; 
+            render(); 
+        }
+        
+        function selectDexEntry(id) {
+            if (gameState.seeker.dexCollected.includes(id)) {
+                gameState.selectedDexId = id;
+                render();
+            } else {
+                alert('Data spesies ini belum terbuka di Aether Dex (Belum pernah ditangkap).');
+            }
+        }
+
+        function returnToHub() { gameState.screen = 'HUB'; render(); }
+
+        function withdrawFromPC(pcIndex) {
+            if (gameState.seeker.activeParty.length >= 6) {
+                alert('Team aktif sudah penuh (Maksimal 6)!');
+                return;
+            }
+            let kin = gameState.seeker.pcStorage.splice(pcIndex, 1)[0];
+            gameState.seeker.activeParty.push(kin);
+            alert(`${kin.name} dipindahkan dari PC ke Team aktif.`);
+            render();
+        }
+
+        // --- NDS LEVEL UP SYSTEM ---
+        function addExpAndCheckLevelUp() {
+            let leader = gameState.seeker.activeParty[0];
+            let earnedExp = 30;
+            leader.exp += earnedExp;
+            leader.evs.atk += 1;
+            leader.evs.hp += 1;
+
+            gameState.battleLog.unshift(`${leader.name} mendapatkan ${earnedExp} EXP.`);
+
+            if (leader.exp >= leader.maxExp) {
+                leader.level++;
+                let leftoverExp = leader.exp - leader.maxExp;
+                leader.exp = leftoverExp;
+                leader.maxExp += 25;
+
+                let oldMaxHp = leader.maxHp;
+                let oldAtk = leader.atk;
+                let oldDef = leader.def;
+
+                updateCalculatedStats(leader);
+
+                let incHp = leader.maxHp - oldMaxHp;
+                let incAtk = leader.atk - oldAtk;
+                let incDef = leader.def - oldDef;
+
+                leader.hp = leader.maxHp;
+
+                gameState.ndsLevelUpData = {
+                    name: leader.name,
+                    newLevel: leader.level,
+                    hpInc: Math.max(1, incHp),
+                    atkInc: Math.max(1, incAtk),
+                    defInc: Math.max(1, incDef)
+                };
+            }
+        }
+
+        function closeNdsLevelUp() {
+            gameState.ndsLevelUpData = null;
+            alert('Pertarungan dimenangkan! Kembali ke Hub.');
+            gameState.screen = 'HUB';
+            render();
+        }
+
+        // --- EXPLORATION & WILD ENCOUNTER ---
+        function tapNode(nodeId) {
+            const node = gameState.explorationNodes.find(n => n.id === nodeId);
+            if (!node || !node.unlocked) {
+                alert('Node ini masih terkunci.');
+                return;
+            }
+
+            let rngRoll = Math.random();
+            if (rngRoll < 0.40) {
+                alert(`✨ Tap berhasil di ${node.name}!\nAnda menemukan: 1x Prism Shard & 50 Gold!`);
+            } else if (rngRoll < 0.70) {
+                alert(`🌿 Tap berhasil di ${node.name}.\nSuasana tenang, tidak ada anomali.`);
+            } else {
+                // Pilih random species dari #010 sampai #228
+                let randomIdNum = Math.floor(Math.random() * 219) + 10;
+                let randomKey = "AK-" + String(randomIdNum).padStart(3, '0');
+                let wildTemplate = masterAetherkinDatabase[randomKey] || masterAetherkinDatabase["AK-010"];
+                
+                let wildKin = createAetherkinInstance(randomKey, Math.floor(Math.random() * 3) + 3);
+                gameState.wildAetherkin = wildKin;
+
+                gameState.battleLog = [`${wildKin.name} liar [${wildKin.personality}] muncul dari semak-semak!`];
+                gameState.ndsLevelUpData = null;
+                gameState.screen = 'BATTLE';
+                render();
+            }
+        }
+
+        function executeBattleTurn(moveName) {
+            let leader = gameState.seeker.activeParty[0];
+            let wild = gameState.wildAetherkin;
+            let move = masterMoves[moveName];
+
+            let partyFirst = leader.spd >= wild.spd;
+
+            if (partyFirst) {
+                resolvePartyAttack(move);
+                if (wild.hp > 0) resolveWildAttack();
+            } else {
+                resolveWildAttack();
+                if (leader.hp > 0) resolvePartyAttack(move);
+            }
+            render();
+        }
+
+        function resolvePartyAttack(move) {
+            let leader = gameState.seeker.activeParty[0];
+            let wild = gameState.wildAetherkin;
+
+            let isStab = (move.element === leader.primaryElem || move.element === leader.secondaryElem);
+            let stabMultiplier = isStab ? 1.35 : 1.0;
+
+            let finalDmg = Math.floor((move.power + leader.atk - wild.def) * stabMultiplier);
+            finalDmg = Math.max(5, finalDmg);
+
+            wild.hp = Math.max(0, wild.hp - finalDmg);
+            let logMsg = `${leader.name} menggunakan ${move.name}! (${finalDmg} DMG)`;
+            if (isStab) logMsg += ` [STAB!]`;
+            gameState.battleLog.unshift(logMsg);
+
+            if (move.statusInflict && !wild.status) {
+                wild.status = move.statusInflict;
+                gameState.battleLog.unshift(`${wild.name} terkena status ${move.statusInflict}!`);
+            }
+
+            if (wild.hp === 0) {
+                gameState.battleLog.unshift(`🎉 ${wild.name} dikalahkan!`);
+                addExpAndCheckLevelUp();
+                
+                if (!gameState.ndsLevelUpData) {
+                    setTimeout(() => {
+                        alert('Pertarungan dimenangkan! Kembali ke Hub.');
+                        gameState.screen = 'HUB';
+                        render();
+                    }, 1200);
+                }
+            }
+        }
+
+        function resolveWildAttack() {
+            let leader = gameState.seeker.activeParty[0];
+            let wild = gameState.wildAetherkin;
+            let dmg = Math.max(4, Math.floor(15 + wild.atk - leader.def));
+            leader.hp = Math.max(0, leader.hp - dmg);
+            gameState.battleLog.unshift(`${wild.name} menyerang! ${leader.name} menerima ${dmg} DMG.`);
+
+            if (leader.hp === 0) {
+                gameState.battleLog.unshift(`⚠️ ${leader.name} pingsan! Mundur ke Hub.`);
+                setTimeout(() => {
+                    leader.hp = leader.maxHp;
+                    gameState.screen = 'HUB';
+                    render();
+                }, 1500);
+            }
+        }
+
+        function openCaptureSelector() {
+            let basicCount = gameState.seeker.inventory["Basic Prism Vessel"] || 0;
+            let enhCount = gameState.seeker.inventory["Enhanced Prism Vessel"] || 0;
+
+            let choice = prompt(`Pilih Prism Vessel untuk menangkap ${gameState.wildAetherkin.name}:\n1. Basic Prism Vessel (Sisa: ${basicCount})\n2. Enhanced Prism Vessel (Sisa: ${enhCount})\n\nKetik angka pilihan (1 atau 2):`, "1");
+            
+            if (choice === "1") {
+                attemptCapture("Basic Prism Vessel", 0.60);
+            } else if (choice === "2") {
+                attemptCapture("Enhanced Prism Vessel", 0.85);
+            }
+        }
+
+        function attemptCapture(vesselName, baseRate) {
+            let wild = gameState.wildAetherkin;
+            if (gameState.seeker.inventory[vesselName] <= 0) {
+                alert(`${vesselName} di Bag sudah habis!`);
+                return;
+            }
+            gameState.seeker.inventory[vesselName]--;
+
+            let hpRatio = wild.hp / wild.maxHp;
+            let statusBonus = wild.status ? 0.20 : 0.0;
+            let finalCaptureChance = (baseRate + (1 - hpRatio) * 0.40 + statusBonus);
+
+            let roll = Math.random();
+            if (roll <= finalCaptureChance) {
+                alert(`🔮 BERHASIL!\nPrism Vessel menyerap energi ${wild.name} [Kepribadian: ${wild.personality}]!`);
+                
+                if (!gameState.seeker.dexCollected.includes(wild.id)) {
+                    gameState.seeker.dexCollected.push(wild.id);
+                }
+
+                // Sistem PC Storage otomatis jika team aktif sudah mencapai 6
+                if (gameState.seeker.activeParty.length < 6) {
+                    gameState.seeker.activeParty.push(wild);
+                    alert(`${wild.name} ditambahkan langsung ke Team aktif.`);
+                } else {
+                    gameState.seeker.pcStorage.push(wild);
+                    alert(`Team aktif penuh (6/6)! ${wild.name} otomatis dikirim ke PC Storage.`);
+                }
+
+                gameState.screen = 'HUB';
+                render();
+            } else {
+                alert(`❌ GAGAL!\n${wild.name} berhasil melepaskan diri dari ${vesselName}!`);
+                resolveWildAttack();
+            }
+        }
+
+        function battleAction(action) {
+            let leader = gameState.seeker.activeParty[0];
+            let wild = gameState.wildAetherkin;
+
+            if (action === 'USE_HEAL') {
+                if (gameState.seeker.inventory["Minor Heal Potion"] > 0) {
+                    gameState.seeker.inventory["Minor Heal Potion"]--;
+                    leader.hp = Math.min(leader.maxHp, leader.hp + 25);
+                    gameState.battleLog.unshift(`💊 Seeker menggunakan Minor Heal Potion! Pulih 25 HP.`);
+                    resolveWildAttack();
+                } else {
+                    alert('Minor Heal Potion habis di Bag!');
+                }
+            } else if (action === 'RUN') {
+                alert('Berhasil melarikan diri.');
+                gameState.screen = 'HUB';
+                render();
+                return;
+            }
+            render();
+        }
+
+        function resetGame() {
+            if(confirm('Reset permainan?')) {
+                gameState.screen = 'TITLE';
+                gameState.seeker = { name: '', gender: '', badgeCount: 0, activeParty: [], pcStorage: [], dexCollected: [], inventory: { "Basic Prism Vessel": 5, "Enhanced Prism Vessel": 2, "Minor Heal Potion": 5 } };
+                render();
+            }
+        }
+
+        window.onload = function() { render(); };
+    </script>
+</body>
+</html>
